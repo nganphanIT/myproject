@@ -1,0 +1,21 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class CartItem extends Model
+{
+    protected $table ="cart_items";
+    protected $fillable = ['user_id','product_id', 'quantity'];
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function product() // Assuming you meant "blog" instead of "product"
+    {
+        return $this->belongsTo(Blog::class);
+    }
+}
