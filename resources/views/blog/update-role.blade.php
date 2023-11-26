@@ -1,32 +1,40 @@
 @extends('blog.general.master')
+@section('sidebar')
+    <div class="w3-sidebar w3-bar-block w3-light-grey w3-card" style="width:100%">
+        <a href="{{ url('blog/blog/create') }}" class="nav-link ">Thêm sản phẩm</a>
+        <a href="{{ url('blog/category/create') }}" class="nav-link ">Thêm thương hiệu</a>
+        <a href="{{ url('blog/blog/discount') }}" class="nav-link ">Thêm mã giảm giá</a>
+    </div>
+@endsection
 @section('content')
     <div class="container">
-        <div class="row">
-            <h1>PHÂN QUYỀN TRUY CẬP</h1>
-            <div class="col-50">
-                <table class="table">
-                    <tr class="title">
-                        <td>STT</td>
-                        <td>TÊN TÀI KHOẢN</td>
-                        <td>EMAIL</td>
-                        <td>QUYỀN TRUY CẬP</td>
-                    </tr>
-                    @foreach($users as $user)
-                        <tr>
-                            <td class="center border-cell">{{ $loop->iteration }}</td>
-                            <td class="border-cell">{{ $user->name }}</td>
-                            <td class="border-cell">{{ $user->email }}</td>
-                            <td class="border-cell">
-                                <select class="role border-cell" data-user-id="{{ $user->id }}">
-                                    <option value="1" {{ $user->role == '1' ? 'selected' : '' }}>Administrators</option>
-                                    <option value="0" {{ $user->role == '0' ? 'selected' : '' }}>Client</option>
-                                </select>
-                            </td>
-                        </tr>
-                    @endforeach
-                </table>
-            <div>
-        </div>
+        <h1>Quyền truy cập</h1>
+        @if(session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+        <table class="table">
+            <tr class="title">
+                <td>STT</td>
+                <td>TÊN TÀI KHOẢN</td>
+                <td>EMAIL</td>
+                <td>QUYỀN TRUY CẬP</td>
+            </tr>
+            @foreach($users as $user)
+                <tr>
+                    <td class="center border-cell">{{ $loop->iteration }}</td>
+                    <td class="border-cell">{{ $user->name }}</td>
+                    <td class="border-cell">{{ $user->email }}</td>
+                    <td class="border-cell">
+                        <select class="role border-cell" data-user-id="{{ $user->id }}">
+                            <option value="1" {{ $user->role == '1' ? 'selected' : '' }}>Administrators</option>
+                            <option value="0" {{ $user->role == '0' ? 'selected' : '' }}>Client</option>
+                        </select>
+                    </td>
+                </tr>
+            @endforeach
+        </table>
     </div>
 @endsection
 <style>
@@ -70,15 +78,15 @@
         background-attachment: fixed;
         background-position: center;
         border-radius: 2%;
-        margin-left: -20%;
+        margin-left: 0%;
     }
     .alert{
         font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; /* Specify a fallback font family */
     }
-    h1{
+    h2{
         font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; /* Specify a fallback font family */
         font-size: 40pt;
-        margin-left: 5%;
+        margin-left: 35%;
     }
     .user {
         margin-bottom: 10px;

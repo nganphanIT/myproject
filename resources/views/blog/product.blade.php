@@ -1,8 +1,3 @@
-{{-- <div class="product">
-    <h3>Product Name</h3>
-    <p>Product Description</p>
-
-</div> --}}
 @extends('blog.general.master')
 @section('content')
     <h3>DANH SÁCH SẢN PHẨM</h3>
@@ -25,9 +20,6 @@
     </div>
     @endforeach
 @endsection
-
-<!-- Include Bootstrap CSS and other dependencies -->
-
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 <script>

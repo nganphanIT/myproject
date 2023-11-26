@@ -88,9 +88,13 @@
 @section('content')
     <div class="container border">
         @if(session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
+            <script>
+                // Hiển thị hộp thoại xác nhận (confirm dialog)
+                if(confirm("{{ session('success') }}")) {
+                    // Nếu người dùng nhấn OK, reload trang
+                    window.location.href = "{{ url()->current() }}";
+                }
+            </script>
         @endif
         <form id="loginForm" action="{{url('login')}}" method="post">
             <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start divider d-flex align-items-center my-4">
