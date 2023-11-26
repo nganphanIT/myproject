@@ -74,62 +74,98 @@
             magnify("myimage", 2);
         </script>
 </div>
-<br><br>
-<div class="center" >
-    <td style="margin-left: 20%">
-        <a href="{{ url('blog/client/cart/add') }}/{{ $blog->id }}">
-            <button class="btn-fa">
-                <i style="font-size:24px; color:black" class="fa fa-shopping-cart"></i>
-            </button>
-        </a>
-        <a href="{{ url('#') }}/{{ $blog->id }}">
-            <button class="btn-fa">
-                <i class='far fa-heart' style="font-size:24px; color:black"></i>
-            </button>
-        </a>
-    </td>
-</div>
 @endsection
 @section('content')
     <div class="container">
-        <h1>CHI TIẾT SẢN PHẨM</h1>
+        {{-- <h1>CHI TIẾT SẢN PHẨM</h1> --}}
         <div class="row">
             <div class="col-10">
                 <table class="table table-stripe">
                     @if (!$blog->sale_off)
-                        <p><strong>Tên sản phẩm: </strong> {{ $blog->title }}</p>
+                        <p style="font-size:35pt"><strong>{{ $blog->title }}</strong> </p> <br>
+                        <p style="color: red;font-style:italic; font-size:25pt">{{ number_format($blog->price,0)}} đồng</p>
                         <p><strong>Thương hiệu: </strong> {{ $category->title }}</p>
                         <p><strong>Giới tính: </strong>{{ $blog->sex }}</p>
-                        <p><strong>Thông tin chi tiết:</strong></p>
-                        <p> {!! $blog->description !!}</p>
-                        <p> {!! $blog->content !!}</p>
-                        <p><strong>Giá: </strong>{{ number_format($blog->price,0)}} đồng</p>
+                        <p><strong>Gọi đặt mua: </strong> 0989 888 888</p>
+                        <p><strong>Vận chuyển: </strong> Freeship Hà Nội và TPHCM; Những thành phố khác đồng giá 30 000 đồng / 1 đơn hàng</p>
+                        <p><i class='fas fa-user-shield' style='font-size:34px'></i>  Đảm bảo uy tín chất lượng</i></p>
+                        <p><i class='far fa-check-square' style='font-size:24px'></i>   Miễn phí đổi trả trong vòng 7 ngày</p>
+                        <p><i class='far fa-check-square' style='font-size:24px'></i>   Kiểm tra trước khi nhận hàng</p>
+                        <p><i class='far fa-check-square' style='font-size:24px'></i>   Hoàn tiền nếu phát hiện hàng giả</p>
+                        <div>
+                            <a href="{{ url('blog/client/cart/add') }}/{{ $blog->id }}">
+                                <button style="font-size:24px; background-color:black; color:white " class="btn-fa">
+                                    THÊM VÀO GIỎ HÀNG
+                                </button>
+                            </a>
+                            <form id="like-form" action="{{ url('blog/client/like') }}/{{ $blog->id }}" method="post">
+                                @csrf
+                                <button id="like-btn" id="like-btn-{{ $blog->id }}" type="submit" class="btn-fa" onclick="toggleLike() onclick="toggleLike({{ $blog->id }})">
+                                    <i id="like-icon-{{ $blog->id }}" class='far fa-heart' style="font-size:26px; color:{{ App\Models\Like::where(['user_id' => Auth::user()->id, 'product_id' => $blog->id])->exists() ? 'red' : 'black' }}"></i>
+                                </button>
+                            </form>
+                            <button class="btn-fa">
+                                {{ App\Models\Like::where('product_id', $blog->id)->count() }} Likes
+                            </button>
+                        </div>
                     @else
-                        <p><strong>Tên sản phẩm: </strong> {{ $blog->title }}</p>
-                        <p><strong>Thương hiệu: </strong> {{ $category->title }}</p>
-                        <p><strong>Giới tính: </strong>{{ $blog->sex }}</p>
-                        <p><strong>Thông tin chi tiết:</strong></p>
-                        <p> {!! $blog->description !!}</p>
-                        <p> {!! $blog->content !!}</p>
+                        <p style="font-size:35pt"><strong>{{ $blog->title }}</strong> </p> <br>
                         <p>
                             <strong >Giá cũ:</strong>
                             <p style="text-decoration: line-through;"> {{ number_format($blog->price, 0) }} đồng</p>
                         </p>
-                        <p>
-                            <strong>Giá đã giảm:</strong>
-                            <p style="color: red; font-weight:bold">{{ number_format($blog->price - ($blog->price * $blog->sale_off / 100))}} đồng</p>
-                        </p>
+                        <p style="color: red;font-style:italic; font-size:25pt">{{ number_format($blog->price-($blog->price*$blog->sale_off/100),0)}} đồng</p>
+                        <p><strong>Thương hiệu: </strong> {{ $category->title }}</p>
+                        <p><strong>Giới tính: </strong>{{ $blog->sex }}</p>
+                        <p><strong>Gọi đặt mua: </strong> 0989 888 888</p>
+                        <p><strong>Vận chuyển: </strong> Freeship Hà Nội và TPHCM; Những thành phố khác đồng giá 30 000 đồng / 1 đơn hàng</p>
+                        <p><i class='fas fa-user-shield' style='font-size:34px'></i>  Đảm bảo uy tín chất lượng</i></p>
+                        <p><i class='far fa-check-square' style='font-size:24px'></i>   Miễn phí đổi trả trong vòng 7 ngày</p>
+                        <p><i class='far fa-check-square' style='font-size:24px'></i>   Kiểm tra trước khi nhận hàng</p>
+                        <p><i class='far fa-check-square' style='font-size:24px'></i>   Hoàn tiền nếu phát hiện hàng giả</p>
+                        <div>
+                            <a href="{{ url('blog/client/cart/add') }}/{{ $blog->id }}">
+                                <button style="font-size:24px; background-color:black; color:white " class="btn-fa">
+                                    THÊM VÀO GIỎ HÀNG
+                                </button>
+                            </a>
+                            <form id="like-form" action="{{ url('blog/client/like') }}/{{ $blog->id }}" method="post">
+                                @csrf
+                                <button id="like-btn" id="like-btn-{{ $blog->id }}" type="submit" class="btn-fa" onclick="toggleLike() onclick="toggleLike({{ $blog->id }})">
+                                    <i id="like-icon-{{ $blog->id }}" class='far fa-heart' style="font-size:26px; color:{{ App\Models\Like::where(['user_id' => Auth::user()->id, 'product_id' => $blog->id])->exists() ? 'red' : 'black' }}"></i>
+                                </button>
+                            </form>
+                            <button class="btn-fa">
+                                {{ App\Models\Like::where('product_id', $blog->id)->count() }} Likes
+                            </button>
+                        </div>
                     @endif
                 </table>
+                <div class="detail">
+                    <hr>
+                    <h3>Thông tin chi tiết</h3>
+                    <p> {!! $blog->description !!}</p>
+                    <br>
+                    <p> {!! $blog->content !!}</p> <br>
+                </div>
+                <div class="ad">
+                    <hr>
+                    <h3>Sản phẩm tương tự</h3>
+
+                </div>
             </div>
         </div>
     </div>
-
 @endsection
 <style>
+    .ad,.detail{
+        margin-left: -50%;
+        font-size: 13pt;
+    }
     .promo {
         background: #ccc;
         padding: 3px;
+        font-size: 13pt;
     }
 
     .expire {
@@ -138,15 +174,13 @@
     h1{
         text-align: center;
         font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-        color: #333; /* Set the desired text color */
-        text-shadow: 2px 2px 10px gray;
-        /* text-shadow: 2px 2px; */
     }
     .center{
         margin-left: 30%;
     }
 
     .table{
+       font-size: 13pt;
        background-color: white;
        background-size: cover;
        height: max-content;
@@ -169,7 +203,6 @@
       border: 3px solid #000;
       border-radius: 50%;
       cursor: none;
-      /*Set the size of the magnifier glass:*/
       width: 100px;
       height: 100px;
     }

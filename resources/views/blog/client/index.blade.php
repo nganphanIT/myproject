@@ -217,9 +217,6 @@
                                     <i class="fas fa-bars" style="font-size:26px; color:black"></i>
                                 </a>
                             </button>
-                             {{-- <button id="like-btn" class="btn-fa" type="submit" onclick="toggleLike()">
-                                    <i id="like-icon" class='far fa-heart' style="font-size:24px; color:black"></i>
-                                </button> --}}
                             <form id="like-form" action="{{ url('blog/client/like') }}/{{ $blog->id }}" method="post">
                                 @csrf
                                 <button id="like-btn" id="like-btn-{{ $blog->id }}" type="submit" class="btn-fa" onclick="toggleLike() onclick="toggleLike({{ $blog->id }})">
@@ -257,7 +254,6 @@
                     <div id="chat-history"></div>
                 </div>
                 <div class="chat-container">
-                    <input type="text" id="user" class="input-box" placeholder="Bạn tên gì...">
                     <input type="text" id="question" class="input-box" placeholder="Bạn hỏi gì đi...">
                     <meta name="csrf-token" content="{{ csrf_token() }}">
                     <button id="sendBtn" onclick="sendMessage()" class="send-button" type="submit">Gửi</button>
@@ -265,7 +261,9 @@
             </div>
         </div>
     </form>
+
     <script>
+
         function toggleLike(blogId) {
             const productId = blogId;
             const likeForm = document.getElementById('like-form-' + blogId);
@@ -317,17 +315,24 @@
         }
     </script>
     <script>
+        const botResponses = {
+            "hello": "Hi there! How can I help you?",
+            "how are you": "I'm just a bot, but thanks for asking!",
+            "default": "I didn't understand that. Can you please rephrase?"
+        };
+
+
                 function sendMessage() {
-                var today = new Date();
-                var year = today.getFullYear();
-                var mes = today.getMonth()+1;
-                var dia = today.getDate();
-                var fecha =dia+"-"+mes+"-"+year;
-                document.getElementById("clock").innerHTML = fecha;
-                var user = document.getElementById('user').value;
-                var message = document.getElementById('question').value;
-                if (!user || !message) {
-                    alert('Vui lòng nhập tên và câu hỏi.');
+                    var today = new Date();
+                    var year = today.getFullYear();
+                    var mes = today.getMonth()+1;
+                    var dia = today.getDate();
+                    var fecha =dia+"-"+mes+"-"+year;
+                    document.getElementById("clock").innerHTML = fecha;
+                    var user = @json(Auth::user()->name);
+                    var message = document.getElementById('question').value;
+                if (!message) {
+                    alert('Vui lòng nhập câu hỏi.');
                     return;
                 }
                 var xhr = new XMLHttpRequest();
@@ -350,10 +355,10 @@
             const closeChatBtn = document.getElementById('closeChatBtn');
             const question = document.getElementById('question');
             const chatArea = document.getElementById('chatArea');
-            const user = document.getElementById('user').value;
+            const user = @json(Auth::user()->name);
 
 
-            openChatBtn.addEventListener('click', () => {
+            openChatBtn.addEventListener('mouseover', () => {
                 chatPopup.style.display = 'block';
             });
 
@@ -401,7 +406,7 @@
             document.getElementById('chat-form').addEventListener('submit', function(event) {
                 event.preventDefault();
                 const question = document.getElementById('question').value;
-                const user = document.getElementById('user').value;
+                const user = @json(Auth::user()->name);
                 fetch('/blog/chat/ask', {
                     method: 'POST',
                     headers: {
@@ -422,14 +427,12 @@
                     const chatHistory = document.getElementById('chat-history');
                     chatHistory.innerHTML += `<div><strong> ${user}</strong> ${question}</div>
                                                 <p style="font-style:italic"> ${time}</p>`;
-                    // chatHistory.innerHTML += `<div><strong>Bot:</strong> ${data.answer}</div>
-                    //                             <p style="font-style:italic"> ${time}</p>`;
                 });
             });
             document.getElementById('chat-form').addEventListener('submit', function(event) {
             event.preventDefault();
             const question = document.getElementById('question').value;
-            const user = document.getElementById('user').value;
+            const user = @json(Auth::user()->name);
 
 
             fetch('/blog/chat/ask', {
@@ -455,6 +458,5 @@
                 document.getElementById('question').value = '';
             });
         });
-
     </script>
 @endsection

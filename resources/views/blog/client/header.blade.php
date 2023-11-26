@@ -4,11 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Welcome to Perfume.vn</title>
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
     <link rel="{{ url('assets') }}/ckeditor5/sample/stylesheet" type="text/css" href="styles.css">
 	<link rel="icon" type="image/png" href="https://c.cksource.com/a/1/logos/ckeditor5.png">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -27,10 +30,10 @@
                 <a class="nav-link   " href="{{ url('/introduce') }}">Giới thiệu</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link   " href="#">Nước hoa Nam</a>
+                <a class="nav-link   " href="/blog/client/sort_man">Nước hoa Nam</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link   " href="#">Nước hoa Nữ</a>
+                <a class="nav-link   " href="/blog/client/sort_woman">Nước hoa Nữ</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link   " href="#">Nước hoa Unisex</a>
@@ -44,9 +47,8 @@
             </li>
             <li class="nav-item">
                 <a href="{{ url('/blog/client/cart') }}" class="btn luxurious-cart-button"> <i class="fas fa-shopping-cart"></i></a>
-
+                <a href="{{ url('/blog/client/order') }}" class="btn luxurious-cart-button"><i class='fas fa-receipt'></i></a>
                 <a href="{{ url('/logout') }}" class="btn luxurious-button mx-2"><i class="fas fa-sign-in-alt"></i> </a>
-
             </li>
             <li class="nav-item">
                 <p class="nav-link">{{ Auth::user()->name }}</p>
@@ -83,18 +85,17 @@
         background-color: black;
         color: white;
         border: none;
-        padding: 15px 30px;
-        font-size: 18px;
+        padding: 15px 25px;
+        font-size: 16px;
         border-radius: 8px;
-
-        margin-left: 2px;
+        margin-left: 1px;
     }
     .luxurious-cart-button {
         background-color: black;
         color: white;
         border: none;
-        padding: 15px 30px;
-        font-size: 18px;
+        padding: 15px 25px;
+        font-size: 16px;
         border-radius: 8px;
 
     }
