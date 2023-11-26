@@ -9,9 +9,10 @@
     <link rel="{{ url('assets') }}/ckeditor5/sample/stylesheet" type="text/css" href="styles.css">
 	<link rel="icon" type="image/png" href="https://c.cksource.com/a/1/logos/ckeditor5.png">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <meta name="csrf-token" content="{{ csrf_token() }}"> 
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
@@ -22,22 +23,25 @@
         @if (Auth::user())
             <ul class="navbar-nav ">
                 <li class="nav-item">
-                    <a href="{{ url('blog/blog/') }}" class="nav-link   ">Danh sách sản phẩm</a>
+                    <a href="{{ url('blog/category') }}" class="nav-link   ">Thương hiệu </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ url('blog/category') }}" class="nav-link   ">Danh mục </a>
+                    <a href="{{ url('blog/blog/') }}" class="nav-link   ">Sản phẩm</a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ url('role') }}" class="nav-link    ">Phân quyền</a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ url('blog/blog/create') }}" class="nav-link    ">Thêm mới sản phẩm</a>
+                    <a href="{{ url('blog/discount/index') }}" class="nav-link">Giảm giá</a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ url('blog/category/create') }}" class="nav-link    ">Thêm mới danh mục</a>
+                    <a href="{{ url('blog/orders') }}" class="nav-link    ">Đơn hàng</a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ url('blog/chat/conversations') }}" class="nav-link    ">Tin nhắn chờ</a>
+                    <a href="{{ url('#') }}" class="nav-link    ">Thống kê</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url('blog/chat/conversations') }}" class="nav-link    ">Tư vấn</a>
                 </li>
                 <li class="nav-item">
                     <p class="nav-link">{{ Auth::user()->name }}</p>
