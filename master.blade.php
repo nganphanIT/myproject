@@ -1,0 +1,37 @@
+@include('blog.client.header')
+<main class="py-5">
+    <div class="container">
+         <div class="row">
+            <div class="col-20">
+                <div class="slideshow">
+                    @yield('slideshow')
+                </div>
+            </div>
+         </div>
+         <div class="row">
+            <div class="col-3">
+                <aside>
+                    @section('sidebar')
+                    @show
+                </aside>
+            </div>
+            <div class="col-9">
+                <div class="content">
+                    @yield('content')
+                </div>
+            </div>
+        </div>
+     </div>
+ </main>
+@include('blog.client.footer')
+<style>
+    .py-5{
+        background-color: white;
+        background-size: cover;
+        height: auto;
+        width: 100%;
+        background-attachment: fixed;
+        background-position: center;
+        font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    }
+</style>
